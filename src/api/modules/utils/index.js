@@ -127,6 +127,7 @@ export const getTypeFromUrl = async ( url ) => {
 
 export const whitelist = ( req, res, next ) => {
   const clientIp = requestIp.getClientIp( req );
+  console.log( 'clientIp', clientIp );
   if ( clientIp !== process.env.EDIT_IP ) {
     res.status( 403 ).send( { error: 'Forbidden' } );
   } else {
