@@ -1,5 +1,6 @@
 import Request from 'request';
 import Mime from 'mime-types';
+import requestIp from 'request-ip';
 
 export const getQueryFromUuid = ( uuid = '' ) => {
   let obj = {};
@@ -122,4 +123,13 @@ export const getTypeFromUrl = async ( url ) => {
     );
   } );
   return result;
+};
+
+export const whitelist = ( req, res, next ) => {
+  const clientIp = requestIp.getClientIp( req );
+  if ( clientIp !== process.env.EDIT_IP ) {
+    res.status( 403 ).send( { error: 'Forbidden' } );
+  } else {
+    return next();
+  }
 };

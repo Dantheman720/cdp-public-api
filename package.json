@@ -14,8 +14,8 @@
     "test": "npm run test:unit"
   },
   "dependencies": {
-    "archiver": "^2.1.1",
     "ajv": "^6.4.0",
+    "archiver": "^2.1.1",
     "aws-sdk": "^2.229.1",
     "body-parser": "^1.18.2",
     "bodybuilder": "^2.2.10",
@@ -32,6 +32,7 @@
     "mediainfo-parser": "^1.1.5",
     "mime-types": "^2.1.18",
     "request": "^2.85.0",
+    "request-ip": "^2.0.2",
     "tmp": "0.0.33",
     "tus-js-client": "^1.5.1"
   },
