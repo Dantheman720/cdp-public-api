@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import apiErrorHandler from './modules/errorHandler';
+import { whitelist } from '../api/modules/utils';
 import { cleanTempFilesCtrl, cleanTempFilesErrorCtrl } from '../middleware/cleanTempFiles';
 
 import adminRoutes from './admin/routes';
@@ -15,18 +16,18 @@ import zipRoutes from './tasks/zip/routes';
 const router = new Router();
 
 // admin routes
-router.use( '/admin', adminRoutes );
+router.use( '/admin', whitelist, adminRoutes );
 
 // search -- /v1/search, etc., v1 comes from app.use in index.js
 router.use( '/search', searchRoutes );
 
 // resources
-router.use( '/video', videoRoutes );
-router.use( '/post', postRoutes );
-router.use( '/course', courseRoutes );
-router.use( '/language', languageRoutes );
-router.use( '/taxonomy', taxonomyRoutes );
-router.use( '/owner', ownerRoutes );
+router.use( '/video', whitelist, videoRoutes );
+router.use( '/post', whitelist, postRoutes );
+router.use( '/course', whitelist, courseRoutes );
+router.use( '/language', whitelist, languageRoutes );
+router.use( '/taxonomy', whitelist, taxonomyRoutes );
+router.use( '/owner', whitelist, ownerRoutes );
 router.use( '/zip', zipRoutes );
 
 router.use( cleanTempFilesCtrl );
