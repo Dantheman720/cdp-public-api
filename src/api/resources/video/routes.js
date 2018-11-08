@@ -23,6 +23,11 @@ router
     controller.indexDocument
   );
 
+// Route: /v1/video/srt/[uuid]/[md5]
+router
+  .route( '/srt/:uuid/:md5' )
+  .get( controller.getSRT );
+
 // Route: /v1/video/[uuid]
 router
   .route( '/:uuid' )

@@ -177,6 +177,34 @@ class Video extends AbstractModel {
     if ( !title ) return `Post #${this.body.post_id}`;
     return title;
   }
+
+  /**
+   * Returns object containing generated filename and URL for an SRT matching
+   * the provided md5 and video uuid.
+   *
+   * @param req
+   * @returns { filename, srcUrl }
+   */
+  getSRT( req ) {
+    this.body = req.esDoc;
+
+    // Get associated unit or return null
+    const unit = req.esDoc.unit.find( u => u.srt && u.srt.md5 === req.params.md5 );
+    if ( !unit ) return null;
+
+    // Get locale prefixed by dot using underscore instead of dashes
+    let locale = '';
+    if ( unit.language && unit.language.locale ) locale = `.${unit.language.locale.replace( '-', '_' )}`;
+
+    // Replace whitespace with dash, and remove any non-alphanumeric characters
+    let filename = this.getTitle().trim().replace( /\s+/g, '-' ).replace( /[^\w-]/g, '' );
+    filename = `${filename}${locale}.srt`;
+
+    return {
+      filename,
+      srcUrl: unit.srt.srcUrl
+    };
+  }
 }
 
 export default Video;
